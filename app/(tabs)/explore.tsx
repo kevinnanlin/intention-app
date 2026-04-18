@@ -22,6 +22,7 @@ export default function CardsScreen() {
   const [newTitle, setNewTitle] = useState('');
   const [newCategory, setNewCategory] = useState(CATEGORIES[0]);
   const [newEffort, setNewEffort] = useState<Effort>('low');
+  const [newTime, setNewTime] = useState('');
   const [newSteps, setNewSteps] = useState(['', '', '']);
 
   const filteredCards = selectedCategory
@@ -41,10 +42,12 @@ export default function CardsScreen() {
     addCard({
       category: newCategory,
       effort: newEffort,
+      time: newTime.trim() || '~30 min',
       title: newTitle.trim(),
       steps: newSteps.filter(s => s.trim() !== ''),
     });
     setNewTitle('');
+    setNewTime('');
     setNewSteps(['', '', '']);
     setNewCategory(CATEGORIES[0]);
     setNewEffort('low');
@@ -162,6 +165,16 @@ export default function CardsScreen() {
                 </TouchableOpacity>
               ))}
             </View>
+
+            {/* Time */}
+            <Text style={styles.fieldLabel}>Time estimate</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="e.g. ~30 min, ~1 hr"
+              placeholderTextColor="#555"
+              value={newTime}
+              onChangeText={setNewTime}
+            />
 
             {/* Steps */}
             <Text style={styles.fieldLabel}>Steps (optional)</Text>
